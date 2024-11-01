@@ -1,15 +1,13 @@
-#include "bitboard.h" //bitboard header file
+#include "bitboard.h"
 #include <cstdint>
-#include <iostream> // for printing to the console
+#include <iostream>
 
-// define the global bitboard variables for piece positions
 Bitboard whitePawns, whiteKnights, whiteBishops, whiteRooks, whiteQueens, whiteKing;
 Bitboard blackPawns, blackKnights, blackBishops, blackRooks, blackQueens, blackKing;
 Bitboard whitePieces, blackPieces, allPieces;
 uint64_t whitePiecesArray[6], blackPiecesArray[6];
 char pieceChars[12];
 
-// initializes all pieces to their starting positions on a chessboard
 void init() {
     whitePawns   = 0x000000000000FF00; // 0xFF00 -> binary: 0000 0000 0000 0000 0000 0000 1111 1111
     whiteKnights = 0x0000000000000042; // 0x42 -> binary: 0000 0000 0000 0000 0000 0000 0100 0010
@@ -25,7 +23,6 @@ void init() {
     blackQueens  = 0x0800000000000000; // 0x08 shifted up -> binary: 0001 0000 0000 0000 0000 0000 0000 0000
     blackKing    = 0x1000000000000000; // 0x10 shifter up -> binary: 0000 1000 0000 0000 0000 0000 0000 0000
 
-    //combine individual bitboards into white, black and all pieces bitboards
     whitePieces = whitePawns | whiteKnights | whiteBishops | whiteRooks | whiteQueens | whiteKing;
     blackPieces = blackPawns | blackKnights | blackBishops | blackRooks | blackQueens | blackKing;
     allPieces = whitePieces | blackPieces;
@@ -61,36 +58,36 @@ void init() {
 
 // counts the number of 1 bits in a bitboard using a built in function
 int popCount(Bitboard bitboard ) {
-    return __builtin_popcountll(bitboard); // gcc/clang built-in function for counting bits in a 64-bit integer
+    return __builtin_popcountll(bitboard);
 }
 
 // finds the index of the least significant 1 bit in a bitboard (needed for move gen)
 int lsbIndex(Bitboard bitboard) {
-    return __builtin_ctzll(bitboard); // gcc/clang function to count trailing zeros (lsb index)
+    return __builtin_ctzll(bitboard);
 }
 
 // sets a bit at a specific square (0 to 63) on the bitboard
 Bitboard setBit(int square) {
-    return 1ULL << square; // shifts to the left by a 'square' positions to set that bit
+    return 1ULL << square;
 }
 
 // clears a bit at a specific square on a bitboard
 Bitboard clearBit(Bitboard bitboard, int square) {
-    return bitboard & ~(1ULL << square); // ANDs with a NOT mask to clear the specific bit
+    return bitboard & ~(1ULL << square);
 }
 
 // prints a bitboard to the console in an 8x8 grid format for easier visualization
 void printBitboard(Bitboard bitboard) {
-    for (int rank = 7; rank >= 0; --rank) { // loop through ranks from top to bottom
-        for (int file = 0; file < 8; ++file) { // loop through files from left to right
-            int square = rank * 8 + file; // calculate the square index (0 to 63)
+    for (int rank = 7; rank >= 0; --rank) {
+        for (int file = 0; file < 8; ++file) {
+            int square = rank * 8 + file;
             long long position = (bitboard & (1ULL << square));
             char piece = getPieceChar(position);
-            std::cout << piece << " "; // print piece char a set bit, 0 otherwise
+            std::cout << piece << " ";
         }
-        std::cout << std::endl; // newline after each rank
+        std::cout << std::endl;
     }
-    std::cout << std::endl; // extra newline for separation
+    std::cout << std::endl;
 }
 
 // returns the piece char for printBitboard

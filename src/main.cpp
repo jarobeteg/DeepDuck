@@ -1,4 +1,4 @@
-#include "bitboard.h" // bitboard header file
+#include "bitboard.h"
 
 int main() {
     init();

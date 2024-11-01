@@ -1,12 +1,11 @@
 #ifndef BITBOARD_H
 #define BITBOARD_H
 
-#include <cstdint> // for using uint64_t, a 64-bit integer type 
+#include <cstdint>
 
 // define bitboard as an alias for uint64_t, to represent a chessboard as a 64-bit integer
 typedef uint64_t Bitboard;
 
-// declare bitboards for each piece type and color (using extern to avoid multiple definitions)
 extern Bitboard whitePawns, whiteKnights, whiteBishops, whiteRooks, whiteQueens, whiteKing;
 extern Bitboard blackPawns, blackKnights, blackBishops, blackRooks, blackQueens, blackKing;
 extern Bitboard whitePieces, blackPieces, allPieces;
