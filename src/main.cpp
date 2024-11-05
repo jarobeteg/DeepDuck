@@ -1,9 +1,7 @@
-#include "bitboard.h"
+#include "position.h"
 
 int main() {
-    init();
-    
-    printBitboard(allPieces);
+    Position position;
 
     return 0;
 }
