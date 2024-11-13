@@ -6,8 +6,12 @@
 #include "bitboard.h"
 #include "types.h"
 
+// stores previous states of the chessboard to allow undo moves etc.
 struct StateInfo {};
 
+// this class stores information about the board representation
+// pieces, who to move, castles info etc.
+// this also make moves and undo moves etc.
 class Position {
     public:
     Position();

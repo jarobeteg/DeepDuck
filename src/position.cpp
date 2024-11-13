@@ -8,6 +8,7 @@ Position::Position() {
     Position::init();
 }
 
+// initializes the starting position of a chess game
 void Position::init() {
     whitePawns   = Rank2;
     whiteKnights = Rank1 & (FileB | FileG);

@@ -8,13 +8,15 @@ using Bitboard = uint64_t;
 enum Color { 
     WHITE, 
     BLACK, 
+    
     COLOR_NB = 2 
     };
 
 enum Piece {
-    W_PAWNS, W_KNIGHTS, W_BISHOP, W_ROOKS, W_QUEENS, W_KING,
-    B_PAWN, B_KNIGHTS, B_BISHOP, B_ROOKS, B_QUEENS, B_KING,
+    W_PAWN, W_KNIGHT, W_BISHOP, W_ROOK, W_QUEEN, W_KING,
+    B_PAWN, B_KNIGHT, B_BISHOP, B_ROOK, B_QUEEN, B_KING,
     PIECE_NONE,
+    
     PIECE_NB = 12
 };
 
@@ -32,5 +34,37 @@ enum Square : int {
     SQUARE_NB = 64
 };
 
+// a move is stored in 16 bits
+// bit 0-5 is for the source square (0-63)
+// bit 6-11 is for the destination square (0-63)
+// bit 12-13 is for promotion piece type
+// bit 14-15 is for special moves like promotion, en passant and castling
+class Move {
+    public:
+    Move() = default;
+    // construsctor to initialize from raw data
+    constexpr explicit Move(std::uint16_t d) : 
+        data(d) {}
+    
+    // constructor to initialize from source and destination squares
+    constexpr Move(Square from, Square to, int promotionType = 0, int specialMove = 0) : 
+        data((specialMove << 14) | (promotionType << 12) | (to << 6) | from) {}
+
+    // getters
+    constexpr Square from_sq() const { return Square(data & 0x3F); }
+    constexpr Square to_sq() const { return Square((data >> 6) & 0x3F); }
+    constexpr int promotion_type() const { return ((data >> 12) & 0x3); }
+    constexpr int special_move() const { return ((data >> 14) & 0x3); }
+
+    // raw data
+    constexpr std::uint16_t raw() const { return data; }
+
+    // comparison operators
+    constexpr bool operator==(const Move& m) const { return data == m.data; }
+    constexpr bool operator!=(const Move& m) const { return data != m.data; }
+
+    protected:
+    std::uint16_t data;
+};
 
 #endif
