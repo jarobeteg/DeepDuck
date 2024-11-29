@@ -1,5 +1,5 @@
-# DeepDuck
-It's a project for me to learn and get better with `C++`. Will see where this takes me. DeepDuck is supposed to be a hobby chess engine.\
+# QueenBee
+It's a project for me to learn and get better with `C++`. Will see where this takes me. QueenBee is supposed to be a hobby chess engine.\
 It doesn't do much as of yet. It just prints out a chessboard on the console.
 
 ## How to build
